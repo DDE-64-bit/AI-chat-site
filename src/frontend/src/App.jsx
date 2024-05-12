@@ -8,8 +8,8 @@ import ChatRoomWrapper from './ChatRoomWrapper';
 
 function App() {
   const [user, setUser] = useState(null);
-  
-  return (  
+
+  return (
     <div className="app">
       {/*<ThemeToggle />*/}
       {user ? (

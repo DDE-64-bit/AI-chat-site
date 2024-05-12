@@ -3,7 +3,7 @@ import Chat from './Chat';
 
 function ChatRoomWrapper({ user }) {
   const [activeRoom, setActiveRoom] = useState(null);
-  const rooms = ['general', 'tech', 'random', 'design'];
+  const rooms = ['general', 'tech', 'international', 'design'];
 
   return (
     <div className="chat-container">
