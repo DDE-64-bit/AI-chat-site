@@ -2,36 +2,43 @@ import { useState } from 'react';
 
 function AuthForm({ onLogin }) {
   const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
   const [mode, setMode] = useState('login');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    const endpoint = mode === 'login' 
-      ? "http://localhost:8000/api/token/"
-      : "http://localhost:8000/api/register/";
-  
+
+    const endpoint =
+      mode === 'login'
+        ? "http://localhost:8000/api/token/"
+        : "http://localhost:8000/api/register/";
+
+    const payload =
+      mode === 'login'
+        ? { username, password }
+        : { username, password, email };
+
     const response = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password: "test123" }), // voeg passwordveld toe
+      body: JSON.stringify(payload),
     });
-  
+
     const data = await response.json();
-  
+
     if (response.ok) {
       if (mode === 'login') {
         localStorage.setItem("access", data.access);
         onLogin({ username });
       } else {
-        alert("Account aangemaakt, je kunt nu inloggen");
+        alert("Account aangemaakt. Je kunt nu inloggen.");
         setMode("login");
       }
     } else {
       alert(data.error || "Er ging iets mis");
     }
   };
-  
 
   return (
     <div className="auth-form">
@@ -41,6 +48,20 @@ function AuthForm({ onLogin }) {
           placeholder="Gebruikersnaam"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+        />
+        {mode === 'register' && (
+          <input
+            placeholder="E-mailadres"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        )}
+        <input
+          placeholder="Wachtwoord"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
         <button type="submit">{mode === 'login' ? 'Inloggen' : 'Registreren'}</button>
       </form>
