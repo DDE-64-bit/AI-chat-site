@@ -1,64 +1,64 @@
-import { useEffect, useState, useRef } from 'react';
+  import { useEffect, useState, useRef } from 'react';
 
-function Chat({ user }) {
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
-  const socketRef = useRef(null);
+  function Chat({ user, roomName }) {
+    const [messages, setMessages] = useState([]);
+    const [input, setInput] = useState('');
+    const socketRef = useRef(null);
 
-  useEffect(() => {
-    socketRef.current = new WebSocket("ws://localhost:8000/ws/chat/");
+    useEffect(() => {
+      const token = localStorage.getItem("access");
+      socketRef.current = new WebSocket(`ws://localhost:8000/ws/chat/${roomName}/?token=${token}`);
+      
+      socketRef.current.onopen = () => {
+      console.log("Verbonden");
+      };
 
-    socketRef.current.onopen = () => {
-    console.log("Verbonden");
+      socketRef.current.onclose = () => {
+      console.log("Gesloten");
+      };
+
+      socketRef.current.onerror = (err) => {
+      console.error("Fout:", err);
+      };
+      socketRef.current.onmessage = (e) => {
+        const data = JSON.parse(e.data);
+        console.log("ontvangen via socket:", data);
+        setMessages((prev) => [...prev, data]);
+      };
+
+      return () => socketRef.current.close();
+    }, []);
+
+    const handleSend = () => {
+      if (input.trim() === '') return;
+      const message = { text: input };
+      socketRef.current.send(JSON.stringify(message));
+      setInput('');
     };
 
-    socketRef.current.onclose = () => {
-    console.log("Gesloten");
-    };
+    return (
+      <div className="chat">
+        <h2>Welkom, {user.username}</h2>
 
-    socketRef.current.onerror = (err) => {
-    console.error("Fout:", err);
-    };
-    socketRef.current.onmessage = (e) => {
-      const data = JSON.parse(e.data);
-      console.log("ontvangen via socket:", data);
-      setMessages((prev) => [...prev, data]);
-    };
+        <div className="messages">
+        {messages.map((msg, index) => (
+          <p key={index}>
+              <strong>{msg.user || 'onbekend'}:</strong> {msg.text || '(leeg)'}
+          </p>
+          ))}
+        </div>
 
-    return () => socketRef.current.close();
-  }, []);
-
-  const handleSend = () => {
-    if (input.trim() === '') return;
-    const message = { text: input };
-    socketRef.current.send(JSON.stringify(message));
-    setInput('');
-  };
-
-  return (
-    <div className="chat">
-      <h2>Welkom, {user.username}</h2>
-
-      <div className="messages">
-      {messages.map((msg, index) => (
-        <p key={index}>
-            <strong>{msg.user || 'onbekend'}:</strong> {msg.text || '(leeg)'}
-        </p>
-        ))}
-
+        <div className="input">
+          <input
+            placeholder="Typ een bericht..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+          />
+          <button onClick={handleSend}>Verstuur</button>
+        </div>
       </div>
+    );
+  }
 
-      <div className="input">
-        <input
-          placeholder="Typ een bericht..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-        />
-        <button onClick={handleSend}>Verstuur</button>
-      </div>
-    </div>
-  );
-}
-
-export default Chat;
+  export default Chat;

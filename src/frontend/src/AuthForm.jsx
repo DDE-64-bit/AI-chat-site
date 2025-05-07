@@ -21,8 +21,7 @@ function AuthForm({ onLogin }) {
   
     if (response.ok) {
       if (mode === 'login') {
-        // Save JWT token in localStorage
-        localStorage.setItem("token", data.access);
+        localStorage.setItem("access", data.access);
         onLogin({ username });
       } else {
         alert("Account aangemaakt, je kunt nu inloggen");

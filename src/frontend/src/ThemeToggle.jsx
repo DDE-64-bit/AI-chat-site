@@ -1,17 +1,14 @@
 import { useEffect, useState } from "react";
 
 function ThemeToggle() {
-  const [dark, setDark] = useState(false);
-
-  useEffect(() => {
-    document.body.className = dark ? "dark" : "";
-  }, [dark]);
+  const toggleTheme = () => {
+    document.body.classList.toggle('dark-mode');
+  };
 
   return (
-    <label className="switch">
-      <input type="checkbox" checked={dark} onChange={() => setDark(!dark)} />
-      <span className="slider round"></span>
-    </label>
+    <button onClick={toggleTheme}>
+      Toggle Theme
+    </button>
   );
 }
 
