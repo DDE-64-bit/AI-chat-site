@@ -90,7 +90,8 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
+# Directly
+# psql -h localhost -U dde -d ai_chat_db
 
 
 # Password validation

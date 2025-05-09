@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 class ChatMessage(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    #room = models.CharField(max_length=255, default="default")
     text = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
