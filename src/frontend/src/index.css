@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Kleurenvariabelen voor theming */
 :root {
   --bg: #f9f9f9;
   --text: #111;
@@ -36,7 +35,6 @@ body {
   padding: 0;
 }
 
-/* Chat layout */
 .chat-container {
   @apply flex w-full h-screen max-w-full overflow-hidden;
 }
@@ -118,7 +116,6 @@ body {
   margin-left: 0.5rem;
 }
 
-/* Toggle switch */
 .switch {
   position: absolute;
   top: 1rem;

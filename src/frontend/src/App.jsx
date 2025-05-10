@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import AuthForm from './AuthForm';
+/*
 import Chat from './Chat';
 import ThemeToggle from "./ThemeToggle";
+*/
 import ChatRoomWrapper from './ChatRoomWrapper';
 
 function App() {
