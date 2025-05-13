@@ -5,6 +5,8 @@ function ChatRoomWrapper({ user }) {
   const [activeRoom, setActiveRoom] = useState(null);
   const rooms = ['general', 'tech', 'international', 'design'];
 
+  // const rooms = ['general', 'international', 'interesting', 'off-topic']
+
   return (
     <div className="chat-container">
       <aside className="sidebar">
