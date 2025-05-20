@@ -3,9 +3,9 @@ import Chat from './Chat';
 
 function ChatRoomWrapper({ user }) {
   const [activeRoom, setActiveRoom] = useState(null);
-  const rooms = ['general', 'tech', 'international', 'design'];
+  //const rooms = ['general', 'tech', 'international', 'design'];
 
-  // const rooms = ['general', 'international', 'interesting', 'off-topic']
+  const rooms = ['General', 'International', 'Interesting', 'Tech', 'News & Trends', 'Meet New People', 'Off-Topic', 'Creative Space', 'Support & Advice', 'School & Study', "Advise"]
 
   return (
     <div className="chat-container">
@@ -29,7 +29,7 @@ function ChatRoomWrapper({ user }) {
         {activeRoom ? (
           <Chat user={user} roomName={activeRoom} />
         ) : (
-          <div className="empty-room">Select a room to begin</div>
+          <div className="empty-room">Select a room to start</div>
         )}
       </main>
     </div>

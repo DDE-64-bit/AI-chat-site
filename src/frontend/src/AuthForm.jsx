@@ -32,26 +32,26 @@ function AuthForm({ onLogin }) {
         localStorage.setItem("access", data.access);
         onLogin({ username });
       } else {
-        alert("Account aangemaakt. Je kunt nu inloggen.");
+        // alert("Account created.");
         setMode("login");
       }
     } else {
-      alert(data.error || "Er ging iets mis");
+      alert(data.error || "Something went wrong, please try again.");
     }
   };
 
   return (
     <div className="auth-form">
-      <h2>{mode === 'login' ? 'Inloggen' : 'Registreren'}</h2>
+      <h2>{mode === 'login' ? 'Login' : 'Register'}</h2>
       <form onSubmit={handleSubmit}>
         <input
-          placeholder="Gebruikersnaam"
+          placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
         {mode === 'register' && (
           <input
-            placeholder="E-mailadres"
+            placeholder="Mail address"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -63,10 +63,10 @@ function AuthForm({ onLogin }) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">{mode === 'login' ? 'Inloggen' : 'Registreren'}</button>
+        <button type="submit">{mode === 'login' ? 'Log in' : 'Register'}</button>
       </form>
       <p>
-        {mode === 'login' ? 'Nog geen account?' : 'Al een account?'}{" "}
+        {mode === 'login' ? 'Register?' : 'Log in?'}{" "}
         <button onClick={() => setMode(mode === 'login' ? 'register' : 'login')}>
           Wissel naar {mode === 'login' ? 'registratie' : 'inloggen'}
         </button>
